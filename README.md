@@ -7,9 +7,9 @@
 
 ## Repositories
 This project is split into three repositories:
-1. Backend API (Laravel) - [DAW_backend](https://github.com/yourusername/DAW_backend)
-2. Frontend Application (React) - [DAW_frontend](https://github.com/yourusername/DAW_frontend)
-3. Docker Configuration - [DAW_restaurant](https://github.com/yourusername/DAW_restaurant)
+1. Backend API (Laravel) - [daw_backend](https://github.com/Ruben-Alvarez-Dev/daw_backend)
+2. Frontend Application (React) - [daw_frontend](https://github.com/Ruben-Alvarez-Dev/daw_frontend)
+3. Docker Configuration - [daw_docker](https://github.com/Ruben-Alvarez-Dev/daw_docker)
 
 ## Requirements
 - Docker Desktop (Windows/macOS) or Docker Engine (Linux)
@@ -20,7 +20,7 @@ This project is split into three repositories:
 ### Using Docker Hub (Quickest Method)
 ```bash
 # Pull and run the container
-docker pull yourusername/daw-restaurant
+docker pull rubenalvarezdev/daw-docker
 docker-compose up -d
 ```
 
@@ -28,10 +28,10 @@ docker-compose up -d
 1. Install Docker Desktop for Windows
 2. Clone the repositories:
 ```bash
-git clone https://github.com/yourusername/DAW_restaurant.git
-cd DAW_restaurant
-git clone https://github.com/yourusername/DAW_frontend.git frontend
-git clone https://github.com/yourusername/DAW_backend.git backend
+git clone https://github.com/Ruben-Alvarez-Dev/daw_docker.git
+cd daw_docker
+git clone https://github.com/Ruben-Alvarez-Dev/daw_frontend.git frontend
+git clone https://github.com/Ruben-Alvarez-Dev/daw_backend.git backend
 ```
 3. Start the containers:
 ```bash
@@ -42,10 +42,10 @@ docker-compose up -d
 1. Install Docker Desktop for macOS
 2. Clone the repositories:
 ```bash
-git clone https://github.com/yourusername/DAW_restaurant.git
-cd DAW_restaurant
-git clone https://github.com/yourusername/DAW_frontend.git frontend
-git clone https://github.com/yourusername/DAW_backend.git backend
+git clone https://github.com/Ruben-Alvarez-Dev/daw_docker.git
+cd daw_docker
+git clone https://github.com/Ruben-Alvarez-Dev/daw_frontend.git frontend
+git clone https://github.com/Ruben-Alvarez-Dev/daw_backend.git backend
 ```
 3. Start the containers:
 ```bash
@@ -74,4 +74,3 @@ docker-compose logs -f
 
 # Rebuild containers
 docker-compose up -d --build
-```
