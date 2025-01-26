@@ -1,19 +1,24 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
-# Install dependencies if vendor directory is empty
-if [ ! -d "vendor" ] || [ ! "$(ls -A vendor)" ]; then
-    composer install
-fi
+# Install dependencies
+composer install --no-interaction --no-progress
+
+# Wait for MySQL to be ready
+until nc -z -v -w30 db 3306
+do
+  echo "Waiting for database connection..."
+  sleep 5
+done
+
+# Set storage permissions
+chown -R www-data:www-data /var/www/html/storage
+chmod -R 775 /var/www/html/storage
 
 # Generate key if not exists
-if [ ! -f ".env" ]; then
-    cp .env.example .env
-    php artisan key:generate
-fi
+php artisan key:generate --no-interaction
 
 # Run migrations
-php artisan migrate
+php artisan migrate --force
 
-# Start the application
 exec "$@"

@@ -1,29 +1,41 @@
-# Build stage
-FROM node:20-alpine as build
+# PHP Laravel image
+FROM php:8.2-fpm
 
-WORKDIR /app
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
 
-# Copy package files
-COPY package*.json ./
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-RUN npm install
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Copy project files
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy existing application directory
 COPY . .
 
-# Build the project
-RUN npm run build
+# Install dependencies
+RUN composer install
 
-# Production stage
-FROM nginx:alpine
+# Generate key
+RUN php artisan key:generate
 
-# Copy built assets from build stage
-COPY --from=build /app/dist /usr/share/nginx/html
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html/storage
+RUN chmod -R 775 /var/www/html/storage
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 8000
 
-EXPOSE 5173
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
